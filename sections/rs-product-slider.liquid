@@ -1,0 +1,139 @@
+
+<style>
+    .product_slider_container {
+    display: flex;
+    overflow-x: auto; /* Allows horizontal scrolling */
+    padding: 20px;
+}
+
+.product_slider_child {
+    flex: 0 0 auto; /* Ensures that child items do not shrink */
+    margin-right: 20px; /* Space between products */
+    border: 1px solid #e0e0e0; /* Border for product */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Prevents overflow of images */
+    transition: transform 0.2s ease; /* Smooth scaling on hover */
+}
+
+.product_slider_child:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+.product_link {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Inherit text color from parent */
+}
+
+.csm_product_slider_child_img img {
+    width: 100%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 200px; /* Set a maximum height */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+}
+
+
+.csm_product_slider_child_media {
+    padding: 10px;
+    text-align: center; /* Center align text */
+}
+
+.product_title {
+    font-weight: bold; /* Bold product title */
+    margin-bottom: 5px; /* Space between title and price */
+}
+
+.product_price {
+    color: #27ae60; /* Green color for price */
+}
+
+.product_slider_container {
+    display: flex;
+    overflow-x: auto; /* Allows horizontal scrolling */
+    padding: 20px;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #f1f1f1; /* For Firefox */
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.product_slider_container::-webkit-scrollbar {
+    height: 5px; /* Height of the scrollbar */
+}
+
+.product_slider_container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.product_slider_container::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.product_slider_container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+}
+
+
+</style>
+
+
+
+<div class="product_slider_container">
+    {%- for block in section.blocks -%}
+        {%- case block.type -%}
+            {%- when 'Product' -%}
+                <div class="product_slider_child">
+                    <a href="{{ block.settings.csm_product.url }}" class="product_link">
+                        <div class="csm_product_slider_child_img">
+                            {%- if block.settings.csm_product_img -%}
+                                <img src="{{ block.settings.csm_product_img | image_url }}" alt="{{ block.settings.csm_product.title }}">
+                                
+                            {%- else -%}
+                                <img src="{{ block.settings.csm_product.featured_image |  image_url }}" alt="{{ block.settings.csm_product.title }}">
+                            {%- endif -%}
+                        </div>
+                        <div class="csm_product_slider_child_media">
+                            {{ block.settings.csm_product.title}}
+                            <p class="product_title">{{ block.settings.csm_product.title }}</p>
+                            <p class="product_price">{{ block.settings.csm_product.price | money }}</p>
+                        </div>
+                    </a>
+                </div>
+        {%- endcase -%}
+    {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "RS Product Slider",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [],
+  "blocks": [
+    {
+      "type": "Product",
+      "name": "Add Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "csm_product",
+          "label": "Select Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "csm_product_img",
+          "label": "Select Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RS Product Slider",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

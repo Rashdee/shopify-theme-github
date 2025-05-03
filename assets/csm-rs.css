@@ -1,0 +1,31 @@
+.mega-menu__content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.csm_megamenu_links {
+    width: 40%;
+}
+
+.csm_megamenu_img {
+    width: 13%;
+}
+
+.csm_megamenu_img img{
+    width: 100%;
+}
+
+.csm_megamenu_img a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.csm_megamenu_img p{
+    text-align: center;
+}
+
+/* css for add to cart */
+
+.cart_recommendation {
+    display: flex;
+}
